@@ -59,6 +59,19 @@ funda, e a construção fica com o agente que você já usa.
 - **Qualquer agente, qualquer ferramenta:** a etapa "Conferir" deste kit (`conferir/semelhanca.js`)
   não depende do Craft Anything nem do REA.
 
+## Outros fatos do Craft Anything usados no guia (README e docs/claude-code.md, 10/11/2026)
+
+- O Claude Code roda como processo filho, `claude -p … --output-format stream-json`, com o seu login;
+  o Craft Anything "nunca vê" a sua conta.
+- Com o modo automático desligado, cada tipo de ação nova mostra um cartão
+  "Allow once / Always for this project / Don't allow"; com ele ligado (padrão), "commands: allow"
+  confia no construtor. No nosso teste (ligado) ele rodou `npm install` sem perguntar.
+- O Flatpak "não consegue abrir um navegador", e estudar sites precisa disso.
+- O AppImage traz a CLI também: `<AppImage> --cli <comando>` (não testado aqui; usamos o `.tar.gz`).
+- "Good enough" (Settings) = quão parecido tem que ficar antes de parar de refinar; padrão 90%, de 50 a 100%.
+- Pasta de projetos padrão: `Documents/Craft Anything`, com `craft.json`, `capture/`, `app/`, `checks/`,
+  `investigation.cany/` e `inbox/`.
+
 ## Fontes
 
 - Craft Anything: README.md, docs/claude-code.md e saída da CLI 0.6.0 (`doctor`, `commands`,

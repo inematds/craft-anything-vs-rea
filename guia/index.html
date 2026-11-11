@@ -171,7 +171,7 @@
 <section id="oque"><div class="wrap">
   <span class="chip">O que é</span>
   <h2>Estudar, construir e conferir num lugar só</h2>
-  <p class="sub">A ideia é antiga: em 2009, Markus Persson viu o jogo Infiniminer e fez a própria versão em cerca de uma semana, sem o código do original. Virou o Minecraft, e a Microsoft comprou a Mojang por US$ 2,5 bilhões em 2014. Hoje um agente de IA faz o trabalho pesado; o Craft Anything organiza esse trabalho.</p>
+  <p class="sub">A ideia é antiga: em 2009, Markus Persson viu o jogo Infiniminer e fez a própria versão em cerca de uma semana, sem o código do original. Virou o <a href="https://pt.wikipedia.org/wiki/Minecraft" target="_blank" rel="noopener">Minecraft</a>, e a Microsoft comprou a Mojang por US$ 2,5 bilhões em 2014. Hoje um agente de IA faz o trabalho pesado; o Craft Anything organiza esse trabalho.</p>
   <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="assets/banner-grade.jpg" alt="Banner com as seis partes do guia: estudar, construir, conferir, sala limpa, teste real e comparação com o REA" loading="lazy" style="width:100%;display:block"></figure>
   <div class="grid g3">
     <div class="card"><h3>🔍 Estuda o original</h3><p>Tira prints, mede cores, fontes e espaçamentos e lê o texto visível em três larguras de tela: notebook, tablet e celular.</p></div>
@@ -209,6 +209,18 @@
   </div>
 </div></section>
 
+<section id="palavras" style="padding:40px 0"><div class="wrap">
+  <span class="chip">Palavras que aparecem aqui</span>
+  <div class="grid g3" style="margin-top:14px">
+    <div class="card"><h3>Agente de código</h3><p>Uma IA que escreve e roda programas no seu computador, como o Claude Code. <strong>Harness</strong> é o programa que dá ao modelo de IA as ferramentas para agir (ler, escrever, rodar comandos).</p></div>
+    <div class="card"><h3>CLI, MCP e ACP</h3><p><strong>CLI</strong> = usar pelo terminal, digitando comandos. <strong>MCP</strong> e <strong>ACP</strong> são "tomadas" padrão para ligar um agente de IA a ferramentas (MCP) ou a outro programa que o comanda (ACP).</p></div>
+    <div class="card"><h3>Engenharia reversa</h3><p>Descobrir como um programa funciona olhando o que ele faz ou o arquivo já pronto, sem o código-fonte. <strong>Ghidra, Hopper, IDA e Kuna</strong> são programas que "traduzem" um executável para algo legível.</p></div>
+    <div class="card"><h3>Sandbox</h3><p>Uma caixa isolada onde um programa roda sem conseguir mexer no resto do computador. O Chromium usa uma; nenhuma das duas ferramentas aqui é uma.</p></div>
+    <div class="card"><h3>SHA256</h3><p>Um "código de conferência" do arquivo. Se o código do seu download é igual ao publicado, o arquivo chegou inteiro e não foi trocado.</p></div>
+    <div class="card"><h3>Early alpha</h3><p>Versão bem inicial: funciona, mas muda rápido e ainda tem defeitos. <strong>AppImage, .deb, .rpm, snap e Flatpak</strong> são formatos de instalar programas no Linux.</p></div>
+  </div>
+</div></section>
+
 <section id="pre"><div class="wrap">
   <span class="chip">Pré-requisitos</span>
   <h2>O que você precisa</h2>
@@ -227,13 +239,15 @@
 
   <div class="step"><div class="b">1</div><div>
     <h3>Baixe da página oficial e confira</h3>
-    <p>Na página de versões do repositório, baixe o arquivo do seu sistema: <code>.msi</code> (Windows), <code>.dmg</code> (macOS), <code>.AppImage</code>, <code>.deb</code> ou <code>.rpm</code> (Linux). Confira o código SHA256 com o <code>SHA256SUMS.txt</code> da mesma página. Exemplo no Linux:</p>
+    <p>Na página de versões do repositório, baixe o arquivo do seu sistema: <code>.msi</code> (Windows), <code>.dmg</code> (macOS), ou no Linux o pacote compactado <code>.tar.gz</code> (o que testamos), o <code>.AppImage</code> (um arquivo só, que roda direto), o <code>.deb</code> (Ubuntu/Debian) ou o <code>.rpm</code> (Fedora). Confira o "código de conferência" SHA256 com o <code>SHA256SUMS.txt</code> da mesma página: se for igual, o arquivo chegou inteiro e é o publicado. Foi assim no nosso teste:</p>
 <pre><span class="c"># Linux ARM64; em Intel/AMD troque aarch64 por x86_64</span>
-<span class="k">gh release download</span> v0.6.0 -R storytold/craft-anything -p <span class="s">'craft-anything-0.6.0-linux-aarch64.AppImage'</span> -p <span class="s">'SHA256SUMS.txt'</span>
-<span class="k">grep</span> linux-aarch64.AppImage SHA256SUMS.txt; <span class="k">sha256sum</span> craft-anything-0.6.0-linux-aarch64.AppImage
+<span class="k">gh release download</span> v0.6.0 -R storytold/craft-anything -p <span class="s">'craft-anything-0.6.0-linux-aarch64.tar.gz'</span> -p <span class="s">'SHA256SUMS.txt'</span>
+<span class="k">grep</span> linux-aarch64.tar.gz SHA256SUMS.txt; <span class="k">sha256sum</span> craft-anything-0.6.0-linux-aarch64.tar.gz
 <span class="c"># os dois códigos têm de ser iguais; depois:</span>
-<span class="k">chmod</span> +x craft-anything-0.6.0-linux-aarch64.AppImage &amp;&amp; ./craft-anything-0.6.0-linux-aarch64.AppImage</pre>
-    <p>Sem o <code>gh</code>? Baixe pelo navegador em <a href="https://github.com/storytold/craft-anything/releases/latest" target="_blank" rel="noopener">github.com/storytold/craft-anything/releases</a>. Evite o Flatpak para estudar sites: ele não consegue abrir o navegador.</p>
+<span class="k">tar</span> -xzf craft-anything-0.6.0-linux-aarch64.tar.gz
+./craft-anything-0.6.0-linux-aarch64/bin/craft-anything         <span class="c"># o app de janela</span>
+./craft-anything-0.6.0-linux-aarch64/bin/craft-anything-cli doctor   <span class="c"># a linha de comando</span></pre>
+    <p>Sem o <code>gh</code>? Baixe pelo navegador em <a href="https://github.com/storytold/craft-anything/releases/latest" target="_blank" rel="noopener">github.com/storytold/craft-anything/releases</a>. Quer ir além do SHA256? A página também tem <code>SHA256SUMS.txt.asc</code> e a chave <code>release-signing-key.asc</code> para conferir a assinatura com o <code>gpg</code> (no nosso teste: "Good signature"). O README deles avisa que o Flatpak não consegue abrir o navegador, e estudar sites precisa disso: prefira outro formato.</p>
   </div></div>
 
   <div class="step"><div class="b">2</div><div>
@@ -242,7 +256,8 @@
 <pre><span class="c"># macOS e Linux</span>
 <span class="k">curl</span> -fsSL https://claude.ai/install.sh | bash
 <span class="k">claude</span>            <span class="c"># na 1ª vez, siga o login no navegador</span>
-<span class="k">claude</span> auth status <span class="c"># confere se está logado</span></pre>
+<span class="k">claude</span> auth status <span class="c"># confere se está logado</span>
+<span class="c"># Windows (PowerShell): irm https://claude.ai/install.ps1 | iex</span></pre>
   </div></div>
 
   <div class="step"><div class="b">3</div><div>
@@ -252,7 +267,7 @@
 
   <div class="step"><div class="b">4</div><div>
     <h3>Desligue o modo automático</h3>
-    <p><strong>Settings → Safety → Auto mode → desligado</strong>. De fábrica ele vem <strong>ligado</strong>: o construtor roda comandos (como <code>npm install</code>) sem perguntar. Desligado, aparece um cartão "Allow once / Always for this project / Don't allow" antes de cada tipo de ação nova. Instalar pacotes roda código no seu computador; só diga "sempre" para o que você confia.</p>
+    <p><strong>Settings → Safety → Auto mode → desligado</strong>. De fábrica ele vem <strong>ligado</strong>: o construtor roda comandos (como <code>npm install</code>) sem perguntar. Desligado, segundo a documentação deles, aparece um cartão "Allow once / Always for this project / Don't allow" antes de cada tipo de ação nova (no nosso teste ele estava ligado e não perguntou nada). Instalar pacotes roda código no seu computador; só diga "sempre" para o que você confia.</p>
   </div></div>
 
   <div class="step"><div class="b">5</div><div>
@@ -262,7 +277,7 @@
 
   <div class="step"><div class="b">6</div><div>
     <h3>Faça o primeiro pedido</h3>
-    <p>Na tela <strong>Make</strong>: escolha Website, App ou Game, cole o endereço, deixe <strong>Clean room</strong>, escreva o que quer e aperte Start. Ou pela linha de comando (o AppImage também traz a CLI: <code>./craft-anything-0.6.0-linux-aarch64.AppImage --cli doctor</code>):</p>
+    <p>Na tela <strong>Make</strong>: escolha Website, App ou Game, cole o endereço, deixe <strong>Clean room</strong>, escreva o que quer e aperte Start. Ou pela linha de comando (<code>craft-anything-cli</code>, que vem junto no <code>.tar.gz</code>; o README deles diz que o AppImage também traz, com <code>--cli</code>):</p>
 <pre><span class="k">craft-anything-cli rebuild</span> https://example.com <span class="s">"Recreate this website"</span> --clean-room
 <span class="k">craft-anything-cli rebuild</span> https://example.com <span class="s">"Make the header blue"</span> --continue-in <span class="s">"&lt;pasta do projeto&gt;"</span></pre>
   </div></div>
@@ -327,6 +342,7 @@ layout, but use my own name and colors.</span></pre>
     <div><b>93,6 · 90,7 · 85,5</b><span>nossa régua (estrutura) em 1440 · 820 · 390 px</span></div>
     <div><b>8 de 8</b><span>funções testadas por script funcionaram</span></div>
   </div>
+  <p class="mut">As duas notas não brigam: a do Craft Anything mistura layout, detalhe e texto; a nossa régua olha só onde está cada coisa, e o nome e o rodapé trocados pesam mais nela. Por isso usamos meta 85.</p>
   <div class="ex">
     <figure><img src="assets/teste-lado-a-lado.jpg" alt="Original Copo Cheio em azul à esquerda e a versão Gota Certa em verde à direita, quase iguais" loading="lazy"><figcaption>Original (esquerda) e a versão feita pelo Craft Anything com o Claude Code (direita), em 1440 px.</figcaption></figure>
     <figure><img src="assets/teste-diferencas-390.jpg" alt="Mapa de diferenças no celular: vermelho onde o nome, o número, o botão verde e o rodapé mudaram" loading="lazy"><figcaption>Mapa de diferenças em 390 px: vermelho = diferente. O nome e o rodapé novos derrubam a nota.</figcaption></figure>
@@ -364,7 +380,7 @@ layout, but use my own name and colors.</span></pre>
 
   <div class="step"><div class="b">2</div><div>
     <h3>Meça a semelhança nas 3 larguras</h3>
-    <p>Passe o original e a sua versão (endereço ou arquivo <code>.html</code>). Sai uma tabela com <strong>estrutura</strong> (onde está cada coisa, ignora a cor), <strong>cor</strong> (se as paletas batem; só informa) e pixels iguais, mais os prints lado a lado e o mapa de diferenças.</p>
+    <p>Passe o original e a sua versão (endereço ou arquivo <code>.html</code>). Sai uma tabela com <strong>estrutura</strong> (onde está cada coisa, ignora a cor), <strong>cor</strong> (se as paletas batem; só informa) e pixels iguais, mais os prints lado a lado e o mapa de diferenças. Usa 1440, 820 e 390 px (o Craft Anything usa 768 no tablet); mude com <code>--larguras</code>.</p>
 <pre><span class="k">node</span> conferir/semelhanca.js https://original.exemplo minha-versao/index.html --meta 85 --saida conferencia
 <span class="c"># saída 0 = passou nas 3 larguras · 1 = alguma abaixo da meta · 2 = erro (página não abriu, 404…)</span></pre>
     <p>A régua não se engana com fundo escuro: duas páginas escuras diferentes têm mais de 90% dos pixels iguais, mas a estrutura fica abaixo de 50.</p>
@@ -376,17 +392,19 @@ layout, but use my own name and colors.</span></pre>
 <span class="k">python3</span> conferir/funcoes.py gerar quadro-branco --nome <span class="s">"Rabisco"</span> --saida checklist.md
 <span class="c"># o agente testa, marca [x] e escreve a prova em cada linha; depois:</span>
 <span class="k">python3</span> conferir/funcoes.py conferir checklist.md       <span class="c"># 0 = todas provadas · 1 = falta alguma</span></pre>
+    <p>O modelo <code>quadro-branco</code> traz as 16 funções de um app de desenho. Para outro tipo de app, use <code>generico</code> (10 funções comuns: menu, ação principal, formulário, celular, teclado…) e troque as linhas pelas do seu app: <code>python3 conferir/funcoes.py gerar generico --nome "MeuApp" --saida checklist.md</code>.</p>
     <p>Quer um teste de função automático? <code>conferir/exemplos/funcoes-contador.js</code> é o que usamos no teste real; copie e troque os passos para o seu app.</p>
   </div></div>
 
   <div class="step"><div class="b">4</div><div>
     <h3>Use os pedidos prontos</h3>
+    <p>Abra o pedido, troque o que está entre &lt; &gt; e cole no chat do agente (ou na caixa de pedido do Craft Anything).</p>
     <div class="grid g3" style="margin-top:6px">
-      <div class="card"><h3>1 · Sala limpa</h3><p>Refazer só com o que um visitante vê.</p></div>
-      <div class="card"><h3>2 · Meta de semelhança</h3><p>O agente só para quando a régua passa.</p></div>
-      <div class="card"><h3>3 · Mudança de marca</h3><p>Nome, logo e cor depois que funciona.</p></div>
-      <div class="card"><h3>4 · Provas de função</h3><p>Cada função com prova, no formato do conferidor.</p></div>
-      <div class="card"><h3>5 · Quadro branco</h3><p>O teste completo, com as 16 funções.</p></div>
+      <div class="card"><h3><a href="https://github.com/inematds/craft-anything-vs-rea/blob/main/pedidos/1-sala-limpa.md" target="_blank" rel="noopener">1 · Sala limpa</a></h3><p>Refazer só com o que um visitante vê.</p></div>
+      <div class="card"><h3><a href="https://github.com/inematds/craft-anything-vs-rea/blob/main/pedidos/2-meta-de-semelhanca.md" target="_blank" rel="noopener">2 · Meta de semelhança</a></h3><p>O agente só para quando a régua passa.</p></div>
+      <div class="card"><h3><a href="https://github.com/inematds/craft-anything-vs-rea/blob/main/pedidos/3-mudanca-de-marca.md" target="_blank" rel="noopener">3 · Mudança de marca</a></h3><p>Nome, logo e cor depois que funciona.</p></div>
+      <div class="card"><h3><a href="https://github.com/inematds/craft-anything-vs-rea/blob/main/pedidos/4-provas-de-funcao.md" target="_blank" rel="noopener">4 · Provas de função</a></h3><p>Cada função com prova, no formato do conferidor.</p></div>
+      <div class="card"><h3><a href="https://github.com/inematds/craft-anything-vs-rea/blob/main/pedidos/5-teste-do-quadro-branco.md" target="_blank" rel="noopener">5 · Quadro branco</a></h3><p>O teste completo, com as 16 funções.</p></div>
       <div class="card"><h3>Testes do kit</h3><p><code>bash tests/rodar.sh</code>: mais de 30 verificações, sem internet.</p></div>
     </div>
   </div></div>
