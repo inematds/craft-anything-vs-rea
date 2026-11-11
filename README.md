@@ -4,6 +4,10 @@
 
 **🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
 
+## 🎬 Assista ao vídeo
+
+**Craft Anything: aponte para um app e a IA faz a sua versão**: https://www.youtube.com/watch?v=Jx_lYjw6ioQ · versão vertical: https://www.youtube.com/watch?v=0atFUnqDXv8
+
 ## O que é
 
 O **Craft Anything** é um programa aberto e gratuito que olha um site, app ou jogo, pede a um agente

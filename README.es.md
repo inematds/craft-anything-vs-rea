@@ -4,6 +4,10 @@
 
 **🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
 
+## 🎬 Mira el video
+
+**Craft Anything: apunta a una app y la IA hace tu versión** (en portugués): https://www.youtube.com/watch?v=Jx_lYjw6ioQ · versión vertical: https://www.youtube.com/watch?v=0atFUnqDXv8
+
 ## Qué es
 
 **Craft Anything** es un programa abierto y gratuito que observa un sitio web, una app o un juego, le pide a un agente de IA (como Claude Code) que escriba su propia versión desde cero y compara el resultado con el original. Este repositorio es una guía para instalarlo y usarlo de forma segura, una comparación con **REA** (otra herramienta abierta que muestra cómo funciona un programa por dentro) y una prueba real hecha aquí. El kit incluye una regla para medir la similitud y una lista de funciones para revisar la copia con cualquier agente. Necesitas una computadora y una sesión iniciada en un agente de código; el kit requiere Node.js y Python 3.
