@@ -1,0 +1,16 @@
+{
+  "nome": "Site ou app qualquer (modelo genérico)",
+  "descricao": "Ponto de partida: copie, troque as linhas pelas funções do SEU alvo e apague o que não existe nele.",
+  "funcoes": [
+    {"id": "F01", "nome": "Abre sem erro", "como": "A página abre sem tela branca e sem erro no console do navegador (F12)."},
+    {"id": "F02", "nome": "Menu e links", "como": "Cada item do menu leva ao lugar certo; nenhum link dá página não encontrada."},
+    {"id": "F03", "nome": "Ação principal", "como": "O botão mais importante (comprar, enviar, desenhar, calcular) faz o que o original faz, com o mesmo resultado."},
+    {"id": "F04", "nome": "Formulário", "como": "Campos aceitam texto, mostram aviso quando falta algo obrigatório e confirmam o envio."},
+    {"id": "F05", "nome": "Estado que muda", "como": "Contadores, listas e carrinhos atualizam na hora depois de cada clique."},
+    {"id": "F06", "nome": "Desfazer / voltar", "como": "Dá para voltar ou desfazer a última ação, como no original."},
+    {"id": "F07", "nome": "Celular", "como": "Em 390 px de largura nada fica cortado e a página não rola para o lado."},
+    {"id": "F08", "nome": "Teclado", "como": "Tab passa pelos botões em ordem e Enter aciona o botão em foco."},
+    {"id": "F09", "nome": "Recarregar", "como": "Ao recarregar a página, o que devia ficar salvo continua lá (e o que não devia, some)."},
+    {"id": "F10", "nome": "Nome e marca próprios", "como": "Não aparece o nome, o logo, as fotos nem os textos do original."}
+  ]
+}

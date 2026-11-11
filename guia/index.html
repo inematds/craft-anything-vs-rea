@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>craft-anything-vs-rea — faça a sua versão de um app e confira se funciona</title>
+<meta name="description" content="Guia do Craft Anything (estuda um app, manda um agente construir a sua versão e confere) comparado com o REA, com teste real e um kit para conferir semelhança e funções com qualquer agente.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/craft-anything-vs-rea/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/craft-anything-vs-rea/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/craft-anything-vs-rea/guia/es/">
+<meta property="og:image" content="https://inematds.github.io/craft-anything-vs-rea/guia/assets/banner.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#FACC15; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    --ambbg:rgba(250,204,21,.12); --warnbg:#1a1708; --ok:#7CE0C6; --bad:#F0918A;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#a16207; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    --ambbg:#FEF9C3; --warnbg:#FEF9C3; --ok:#0E6B55; --bad:#A83426;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  body.light pre .k{color:#f0c070}
+  body.light .btn{background:#FACC15}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  body.light a:not(.btn):not(.inema):not(.pro):not(.brand):not(.sec){color:#854d0e;text-decoration:underline;text-decoration-color:#FACC15;text-decoration-thickness:3px}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  body.light nav{background:rgba(246,247,249,.85)}
+  nav .wrap{display:flex;align-items:center;gap:18px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb);white-space:nowrap}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:16px;font-size:.9rem}
+  nav .links a.sec{color:var(--mut);white-space:nowrap} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:var(--ambbg)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:1180px){nav .links a.sec.x{display:none}}
+  @media(max-width:900px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px} nav .brand{font-size:.86rem;gap:5px} nav .brand .emoji{font-size:1rem} nav .inema,nav .pro{font-size:.8rem}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(250,204,21,.18),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:70px 22px}
+  .hero h1{font-size:clamp(2.1rem,4.6vw,3.3rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.15rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:40ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;height:auto;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.1rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:44px 22px}}
+  section{padding:60px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:66ch}
+  section h3.t{font-size:1.2rem;margin:34px 0 12px}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p,.card li{color:var(--mut);font-size:.93rem;margin:0}
+  .card ul{margin:.4em 0 0;padding-left:1.1em}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:var(--ambbg);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 26px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.88rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.85rem;line-height:1.6;color:#d6d6e0;white-space:pre}
+  pre .c{color:#7d7d8a} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:.05em .35em;font-size:.88em}
+  .step .b{width:46px;height:46px;border-radius:12px;background:#FACC15;color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1.6fr 1fr;gap:18px}
+  @media(max-width:760px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;height:auto;display:block;background:#0f172a}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .warn{background:var(--warnbg);border:1px solid var(--line);border-left:4px solid #EAB308;border-radius:14px;padding:18px 22px;margin:22px 0}
+  .warn h3{font-size:1.05rem;margin-bottom:.4em}
+  .warn p,.warn li{margin:.3em 0}
+  .warn ul{margin:.3em 0 0;padding-left:1.1em}
+  table{width:100%;border-collapse:collapse;font-size:.93rem}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:Sora;font-size:.85rem;color:var(--mut);font-weight:600}
+  td:first-child{color:var(--mut);font-weight:500;white-space:nowrap}
+  .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+  .tbl table{min-width:640px}
+  .nums{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:6px 0 22px}
+  @media(max-width:760px){.nums{grid-template-columns:1fr 1fr}}
+  .nums div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .nums b{display:block;font-family:Sora;font-size:1.7rem;color:var(--amb);line-height:1.1}
+  .nums span{color:var(--mut);font-size:.88rem}
+  .check{columns:2;column-gap:28px;margin:0;padding-left:1.1em}
+  @media(max-width:620px){.check{columns:1}}
+  .check li{margin:.25em 0;break-inside:avoid}
+  .tag{display:inline-block;font-family:Sora;font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.15em .65em;border:1px solid currentColor}
+  .tag.ok{color:var(--ok)} .tag.bad{color:var(--bad)}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:4px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">🪶</span> craft-anything-vs-rea</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#fluxo">Etapas</a>
+    <a class="sec" href="#instalar">Instalar</a>
+    <a class="sec x" href="#quadro">Quadro branco</a>
+    <a class="sec" href="#rea">× REA</a>
+    <a class="sec x" href="#teste">Teste</a>
+    <a class="sec" href="#conferir">Conferir</a>
+    <span class="lang"><a class="on" href="./">PT</a><a href="en/">EN</a><a href="es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">🌙</button>
+    <a class="btn" href="https://github.com/inematds/craft-anything-vs-rea" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Craft Anything × REA · guia + kit</span>
+      <h1>Faça a sua versão de um app. Depois prove que ela <span class="amb">funciona</span>.</h1>
+      <p class="lead">O Craft Anything estuda o original, manda um agente de IA construir a sua versão e confere se ficou parecida. Aqui você aprende a usar, vê o teste que fizemos e leva a régua para conferir com qualquer agente.</p>
+      <div class="cta">
+        <a class="btn" href="#instalar">Começar o guia</a>
+        <a class="btn ghost" href="https://github.com/inematds/craft-anything-vs-rea" target="_blank" rel="noopener">Ver o kit no GitHub</a>
+      </div>
+    </div>
+    <figure><img src="assets/banner.jpg" alt="Banner: Faça a sua versão — Craft Anything × REA: estudar, construir e conferir"></figure>
+  </div>
+</header>
+
+<section id="resumo" class="resumo"><div class="wrap">
+  <span class="chip">Em resumo</span>
+  <p>O <strong>Craft Anything</strong> é um programa aberto e gratuito que olha um site, app ou jogo, pede a um agente de IA (como o Claude Code) para escrever a sua própria versão do zero e compara o resultado com o original. Este guia ensina a instalar e usar com segurança, compara com o <strong>REA</strong>, outra ferramenta aberta que mostra como um programa funciona por dentro, e mostra um teste real feito aqui. O kit traz uma régua de semelhança e uma lista de funções para conferir a cópia com qualquer agente. Você precisa de um computador e de um agente de código logado; o kit pede Node.js e Python 3.</p>
+</div></section>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">O que é</span>
+  <h2>Estudar, construir e conferir num lugar só</h2>
+  <p class="sub">A ideia é antiga: em 2009, Markus Persson viu o jogo Infiniminer e fez a própria versão em cerca de uma semana, sem o código do original. Virou o Minecraft, e a Microsoft comprou a Mojang por US$ 2,5 bilhões em 2014. Hoje um agente de IA faz o trabalho pesado; o Craft Anything organiza esse trabalho.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="assets/banner-grade.jpg" alt="Banner com as seis partes do guia: estudar, construir, conferir, sala limpa, teste real e comparação com o REA" loading="lazy" style="width:100%;display:block"></figure>
+  <div class="grid g3">
+    <div class="card"><h3>🔍 Estuda o original</h3><p>Tira prints, mede cores, fontes e espaçamentos e lê o texto visível em três larguras de tela: notebook, tablet e celular.</p></div>
+    <div class="card"><h3>🛠️ Um agente constrói</h3><p>Ele roda o seu agente de código (o Claude Code é o primeiro suportado) e pede uma versão nova, escrita do zero, com o seu nome e as suas cores.</p></div>
+    <div class="card"><h3>✅ Confere e refina</h3><p>Compara a sua versão com o original, lista o que ainda não bate e devolve ao agente, rodada após rodada, até ficar parecido.</p></div>
+  </div>
+  <p class="mut" style="margin-top:18px;font-size:.93rem">Fonte: <a href="https://github.com/storytold/craft-anything" target="_blank" rel="noopener">github.com/storytold/craft-anything</a> — código aberto (MIT ou Apache-2.0), feito pela equipe do ArtCraft, versão 0.6.0 de 09/11/2026, ainda em "early alpha".</p>
+</div></section>
+
+<section id="fluxo"><div class="wrap">
+  <span class="chip">Como funciona</span>
+  <h2>As 4 etapas</h2>
+  <p class="sub">Você aponta o original, diz o que quer e aperta Start. Quando uma decisão é sua, ele pergunta em palavras simples.</p>
+  <div class="flow">
+    <span>1 · Estudar</span><span class="arr">→</span>
+    <span>2 · Construir</span><span class="arr">→</span>
+    <span>3 · Conferir</span><span class="arr">→</span>
+    <span>4 · Pronto</span>
+  </div>
+  <div class="grid g4">
+    <div class="card"><div class="num">1</div><h3>Estudar</h3><p>Abre o original num navegador privado e registra o que um visitante vê, em 1440, 768 e 390 px.</p></div>
+    <div class="card"><div class="num">2</div><h3>Construir</h3><p>O agente escreve um projeto novo, na linguagem que você pedir (ou na que ele achar melhor).</p></div>
+    <div class="card"><div class="num">3</div><h3>Conferir</h3><p>Compara as telas lado a lado e lista as diferenças. Para quando chega no "Good enough" (padrão 90%).</p></div>
+    <div class="card"><div class="num">4</div><h3>Pronto</h3><p>Você abre o resultado ou pede mudanças na caixa de baixo, e ele refina de novo.</p></div>
+  </div>
+
+  <h3 class="t">Sala limpa × Deep</h3>
+  <div class="grid g2">
+    <div class="card"><h3>🧼 Sala limpa (padrão)</h3><p>Só usa o que um visitante vê: prints, texto visível, medidas, cores, fontes, menus abertos. Não lê código, arquivos nem o código-fonte da página. Ferramentas que olham por dentro são recusadas. <strong>Use sempre que o original não for seu.</strong></p></div>
+    <div class="card"><h3>🔬 Deep</h3><p>Usa todas as ferramentas: lê o código e os arquivos do programa (com o Ghidra, se estiver instalado) e o JavaScript do site. <strong>Só para o que é seu</strong> ou que você tem permissão de examinar.</p></div>
+  </div>
+  <div class="warn" role="note">
+    <h3>⚠️ Sala limpa não é uma caixa isolada</h3>
+    <p>É uma regra sobre o que o Craft Anything oferece e recusa. O agente que você roda continua agindo como você, com as suas permissões. No nosso teste, o Claude Code construtor até leu as configurações pessoais da máquina. Para isolar de verdade, rode numa máquina ou pasta separada, sem senhas e sem chaves (veja a <a href="https://inematds.github.io/caixa-do-agente/guia/" target="_blank" rel="noopener">caixa-do-agente</a>).</p>
+  </div>
+</div></section>
+
+<section id="pre"><div class="wrap">
+  <span class="chip">Pré-requisitos</span>
+  <h2>O que você precisa</h2>
+  <p class="sub">Para o Craft Anything e para o kit de conferência deste repositório.</p>
+  <div class="grid g3">
+    <div class="card"><h3>💻 Um computador</h3><p>Windows, macOS, Linux (Intel/AMD ou ARM) ou FreeBSD. Com Chrome, Edge, Brave ou Chromium instalado: ele precisa abrir um navegador para estudar sites.</p></div>
+    <div class="card"><h3>🤖 Um agente de código logado</h3><p>Claude Code (o primeiro suportado), ou Copilot CLI e Grok pelo protocolo ACP. Ele usa o seu login; o Craft Anything nunca vê a sua conta.</p></div>
+    <div class="card"><h3>🧰 Para o kit</h3><p>Node.js 18 ou mais novo com Playwright (para a régua de semelhança) e Python 3 (para a lista de funções). Não precisa do Craft Anything.</p></div>
+  </div>
+</div></section>
+
+<section id="instalar"><div class="wrap">
+  <span class="chip">Guia de uso · passo a passo</span>
+  <h2>Instalar e configurar com segurança</h2>
+  <p class="sub">Seis passos. O 4º é o mais importante: desligar o modo automático para ele pedir licença antes de rodar comandos.</p>
+
+  <div class="step"><div class="b">1</div><div>
+    <h3>Baixe da página oficial e confira</h3>
+    <p>Na página de versões do repositório, baixe o arquivo do seu sistema: <code>.msi</code> (Windows), <code>.dmg</code> (macOS), <code>.AppImage</code>, <code>.deb</code> ou <code>.rpm</code> (Linux). Confira o código SHA256 com o <code>SHA256SUMS.txt</code> da mesma página. Exemplo no Linux:</p>
+<pre><span class="c"># Linux ARM64; em Intel/AMD troque aarch64 por x86_64</span>
+<span class="k">gh release download</span> v0.6.0 -R storytold/craft-anything -p <span class="s">'craft-anything-0.6.0-linux-aarch64.AppImage'</span> -p <span class="s">'SHA256SUMS.txt'</span>
+<span class="k">grep</span> linux-aarch64.AppImage SHA256SUMS.txt; <span class="k">sha256sum</span> craft-anything-0.6.0-linux-aarch64.AppImage
+<span class="c"># os dois códigos têm de ser iguais; depois:</span>
+<span class="k">chmod</span> +x craft-anything-0.6.0-linux-aarch64.AppImage &amp;&amp; ./craft-anything-0.6.0-linux-aarch64.AppImage</pre>
+    <p>Sem o <code>gh</code>? Baixe pelo navegador em <a href="https://github.com/storytold/craft-anything/releases/latest" target="_blank" rel="noopener">github.com/storytold/craft-anything/releases</a>. Evite o Flatpak para estudar sites: ele não consegue abrir o navegador.</p>
+  </div></div>
+
+  <div class="step"><div class="b">2</div><div>
+    <h3>Instale e entre no Claude Code</h3>
+    <p>Se ainda não tem, instale e faça login com a sua conta (assinatura). O Craft Anything roda o seu <code>claude</code> do jeito que ele está.</p>
+<pre><span class="c"># macOS e Linux</span>
+<span class="k">curl</span> -fsSL https://claude.ai/install.sh | bash
+<span class="k">claude</span>            <span class="c"># na 1ª vez, siga o login no navegador</span>
+<span class="k">claude</span> auth status <span class="c"># confere se está logado</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">3</div><div>
+    <h3>Ligue o agente no Craft Anything</h3>
+    <p>No app: <strong>Settings → AI → Harnesses → Detect</strong>. Ele acha o Claude Code instalado. Pela linha de comando, <code>craft-anything-cli doctor</code> mostra o que está faltando.</p>
+  </div></div>
+
+  <div class="step"><div class="b">4</div><div>
+    <h3>Desligue o modo automático</h3>
+    <p><strong>Settings → Safety → Auto mode → desligado</strong>. De fábrica ele vem <strong>ligado</strong>: o construtor roda comandos (como <code>npm install</code>) sem perguntar. Desligado, aparece um cartão "Allow once / Always for this project / Don't allow" antes de cada tipo de ação nova. Instalar pacotes roda código no seu computador; só diga "sempre" para o que você confia.</p>
+  </div></div>
+
+  <div class="step"><div class="b">5</div><div>
+    <h3>Escolha a pasta dos projetos</h3>
+    <p><strong>Settings → General</strong>. O padrão é <code>Documentos/Craft Anything</code>. Cada projeto ganha uma pasta com <code>craft.json</code> (o pedido e o histórico), <code>capture/</code> (o que ele viu no original), <code>app/</code> (a sua versão) e <code>checks/</code> (cada comparação).</p>
+  </div></div>
+
+  <div class="step"><div class="b">6</div><div>
+    <h3>Faça o primeiro pedido</h3>
+    <p>Na tela <strong>Make</strong>: escolha Website, App ou Game, cole o endereço, deixe <strong>Clean room</strong>, escreva o que quer e aperte Start. Ou pela linha de comando (o AppImage também traz a CLI: <code>./craft-anything-0.6.0-linux-aarch64.AppImage --cli doctor</code>):</p>
+<pre><span class="k">craft-anything-cli rebuild</span> https://example.com <span class="s">"Recreate this website"</span> --clean-room
+<span class="k">craft-anything-cli rebuild</span> https://example.com <span class="s">"Make the header blue"</span> --continue-in <span class="s">"&lt;pasta do projeto&gt;"</span></pre>
+  </div></div>
+</div></section>
+
+<section id="quadro"><div class="wrap">
+  <span class="chip">O teste do quadro branco</span>
+  <h2>A cópia bonita que não desenha não serve</h2>
+  <p class="sub">Um bom teste para qualquer ferramenta desse tipo é um quadro branco de desenho aberto, como o Excalidraw: visual simples e muitas funções fáceis de conferir. Suba o "Good enough" em Settings para 95% e peça:</p>
+<pre><span class="s">Make my own version of this whiteboard app and call it &lt;NOME&gt;. Keep the same drawing tools and
+layout, but use my own name and colors.</span></pre>
+  <p class="mut">Em português funciona igual: "Faça a minha própria versão deste app de quadro branco e chame de &lt;NOME&gt;. Mantenha as mesmas ferramentas de desenho e o mesmo layout, mas use o meu nome e as minhas cores." Use uma instância que você pode testar, nunca um site com login.</p>
+
+  <h3 class="t">Depois de pronto, teste as 16 funções</h3>
+  <div class="card">
+    <ul class="check">
+      <li>Retângulo</li><li>Círculo / elipse</li><li>Losango</li><li>Linha</li><li>Seta</li><li>Lápis (desenho livre)</li><li>Texto</li><li>Cor do traço e do fundo</li>
+      <li>Selecionar e mover</li><li>Redimensionar</li><li>Apagar</li><li>Desfazer / refazer</li><li>Zoom</li><li>Tema claro / escuro</li><li>Exportar imagem</li><li>Nome e marca próprios</li>
+    </ul>
+  </div>
+  <p class="mut" style="margin-top:14px">O kit gera essa lista com o "como testar" de cada função e reprova enquanto faltar prova: <code>python3 conferir/funcoes.py gerar quadro-branco --nome "&lt;NOME&gt;" --saida checklist.md</code>.</p>
+
+  <h3 class="t">Só então troque a marca</h3>
+  <p class="mut">Com tudo funcionando, peça na caixa de mudanças: logo novo, cor roxa, nome em todo lugar. Primeiro funcionar, depois a cara: misturar os dois confunde o agente. O pedido pronto está em <code>pedidos/3-mudanca-de-marca.md</code>. O que importa é a experiência de usar, não o print.</p>
+</div></section>
+
+<section id="rea"><div class="wrap">
+  <span class="chip">Comparação</span>
+  <h2>Craft Anything × REA</h2>
+  <p class="sub">Fatos conferidos em 10/11/2026 no README de cada repositório e na API do GitHub. Detalhes e fontes em <a href="https://github.com/inematds/craft-anything-vs-rea/blob/main/COMPARACAO.md" target="_blank" rel="noopener">COMPARACAO.md</a>.</p>
+  <div class="tbl"><table>
+    <tr><th></th><th>Craft Anything</th><th>REA (Reverse Engineer Anything)</th></tr>
+    <tr><td>O que faz</td><td>Estuda, manda construir e confere, tudo num app</td><td>Dá ao seu agente ferramentas para estudar programas; o agente explica com prova e pode escrever a sua versão</td></tr>
+    <tr><td>Quem constrói</td><td>Um agente que ele chama (Claude Code primeiro)</td><td>O agente que você já usa (Claude Code, Codex, Cursor, Gemini CLI…)</td></tr>
+    <tr><td>Como confere</td><td>Sozinho: telas em 3 larguras, até "Good enough"</td><td>Sem conferência visual pronta; o agente testa o que fez</td></tr>
+    <tr><td>Sala limpa</td><td>Padrão de fábrica</td><td>Não tem modo com esse nome</td></tr>
+    <tr><td>Olhar por dentro</td><td>Modo Deep (motores próprios + Ghidra)</td><td>É o forte dele: Hopper, Ghidra, IDA ou Kuna; .NET, Android, Electron, firmware…</td></tr>
+    <tr><td>Forma</td><td>App de janela + CLI + MCP</td><td>MCP + CLI (Node.js)</td></tr>
+    <tr><td>Licença</td><td>MIT ou Apache-2.0</td><td>MIT</td></tr>
+    <tr><td>Criado</td><td>31/10/2026 · ~26 mil estrelas</td><td>14/04/2026 · ~450 mil estrelas</td></tr>
+    <tr><td>Maturidade</td><td>0.6.0, "early alpha"</td><td>rea-agents 6.8.0</td></tr>
+    <tr><td>É caixa isolada?</td><td>Não (o próprio README avisa)</td><td>Não: roda com as suas permissões</td></tr>
+  </table></div>
+  <div class="warn" role="note">
+    <h3>"O Craft Anything é o pai do REA?" Não.</h3>
+    <p>O REA nasceu seis meses e meio antes, é de outro dono, em outra linguagem, e nenhum dos dois READMEs cita o outro. E o REA não "só mostra como funciona": o README dele diz que o agente pode construir uma versão para o seu projeto. A diferença real é de pacote: o Craft Anything junta tudo num app com a sala limpa ligada; o REA é a caixa de ferramentas de estudo mais funda, e a construção fica com o seu agente.</p>
+  </div>
+  <div class="grid g3">
+    <div class="card"><h3>Use o Craft Anything quando…</h3><p>quer refazer um site, app simples ou jogo do seu jeito, sem ler código de ninguém, e quer a conferência pronta.</p></div>
+    <div class="card"><h3>Use o REA quando…</h3><p>quer entender como uma função de um programa seu funciona por dentro: um algoritmo, um formato de arquivo, um app instalado.</p></div>
+    <div class="card"><h3>Use o kit deste repositório quando…</h3><p>já tem um agente e quer conferir qualquer cópia: semelhança nas 3 larguras e prova de cada função.</p></div>
+  </div>
+</div></section>
+
+<section id="teste"><div class="wrap">
+  <span class="chip">Teste real · 10/11/2026</span>
+  <h2>O que aconteceu quando rodamos aqui</h2>
+  <p class="sub">Computador Linux ARM64, Claude Code na assinatura, nenhuma chave de API. Original: uma página local de contador de água ("Copo Cheio"). Pedido: a mesma página com o nome "Gota Certa" e cor verde, em sala limpa.</p>
+  <div class="nums">
+    <div><b>2 min 21 s</b><span>do Start ao "Ready", 2 rodadas</span></div>
+    <div><b>98%</b><span>nota do próprio Craft Anything</span></div>
+    <div><b>93,6 · 90,7 · 85,5</b><span>nossa régua (estrutura) em 1440 · 820 · 390 px</span></div>
+    <div><b>8 de 8</b><span>funções testadas por script funcionaram</span></div>
+  </div>
+  <div class="ex">
+    <figure><img src="assets/teste-lado-a-lado.jpg" alt="Original Copo Cheio em azul à esquerda e a versão Gota Certa em verde à direita, quase iguais" loading="lazy"><figcaption>Original (esquerda) e a versão feita pelo Craft Anything com o Claude Code (direita), em 1440 px.</figcaption></figure>
+    <figure><img src="assets/teste-diferencas-390.jpg" alt="Mapa de diferenças no celular: vermelho onde o nome, o número, o botão verde e o rodapé mudaram" loading="lazy"><figcaption>Mapa de diferenças em 390 px: vermelho = diferente. O nome e o rodapé novos derrubam a nota.</figcaption></figure>
+  </div>
+  <h3 class="t">O que funcionou e o que barrou</h3>
+  <div class="grid g2">
+    <div class="card"><h3><span class="tag ok">funcionou</span></h3><ul>
+      <li>Download conferido: SHA256 e assinatura GPG batem.</li>
+      <li><code>doctor</code>: saudável; achou Claude Code, Codex, Chromium.</li>
+      <li><code>commands</code>: 322 comandos (o README fala em 320).</li>
+      <li>Rebuild em sala limpa pronto e funcionando: somar, tirar, zerar, barra e celular.</li>
+      <li>Custo: saiu da assinatura ("api_billed_usd": 0).</li>
+    </ul></div>
+    <div class="card"><h3><span class="tag bad">barrou</span></h3><ul>
+      <li>Chromium do snap não abriu; o do Playwright foi barrado pelo sandbox do Ubuntu. Passou com um atalho só para a página local.</li>
+      <li>Modo automático vem ligado: rodou <code>npm install</code> sem perguntar.</li>
+      <li>O agente acrescentou coisas que não pedimos (salvar no navegador, frase no rodapé) e avisou.</li>
+      <li>Na 1ª tentativa ele criou configuração fora da pasta do teste.</li>
+    </ul></div>
+  </div>
+  <p class="mut" style="margin-top:16px">Saídas, comandos e detalhes: <a href="https://github.com/inematds/craft-anything-vs-rea/blob/main/TESTE-AQUI.md" target="_blank" rel="noopener">TESTE-AQUI.md</a>.</p>
+</div></section>
+
+<section id="conferir"><div class="wrap">
+  <span class="chip">O kit</span>
+  <h2>A etapa "Conferir" para qualquer agente</h2>
+  <p class="sub">Duas réguas que não dependem do Craft Anything nem do REA: uma mede se ficou parecido, a outra cobra prova de que funciona. Mais cinco pedidos prontos para colar no agente.</p>
+
+  <div class="step"><div class="b">1</div><div>
+    <h3>Pegue o kit</h3>
+<pre><span class="k">git clone</span> https://github.com/inematds/craft-anything-vs-rea
+<span class="k">cd</span> craft-anything-vs-rea
+<span class="k">npm install -g</span> playwright &amp;&amp; <span class="k">npx</span> playwright install chromium   <span class="c"># uma vez só</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">2</div><div>
+    <h3>Meça a semelhança nas 3 larguras</h3>
+    <p>Passe o original e a sua versão (endereço ou arquivo <code>.html</code>). Sai uma tabela com <strong>estrutura</strong> (onde está cada coisa, ignora a cor), <strong>cor</strong> (se as paletas batem; só informa) e pixels iguais, mais os prints lado a lado e o mapa de diferenças.</p>
+<pre><span class="k">node</span> conferir/semelhanca.js https://original.exemplo minha-versao/index.html --meta 85 --saida conferencia
+<span class="c"># saída 0 = passou nas 3 larguras · 1 = alguma abaixo da meta · 2 = erro (página não abriu, 404…)</span></pre>
+    <p>A régua não se engana com fundo escuro: duas páginas escuras diferentes têm mais de 90% dos pixels iguais, mas a estrutura fica abaixo de 50.</p>
+  </div></div>
+
+  <div class="step"><div class="b">3</div><div>
+    <h3>Cobre prova de cada função</h3>
+<pre><span class="k">python3</span> conferir/funcoes.py modelos                     <span class="c"># quadro-branco, generico</span>
+<span class="k">python3</span> conferir/funcoes.py gerar quadro-branco --nome <span class="s">"Rabisco"</span> --saida checklist.md
+<span class="c"># o agente testa, marca [x] e escreve a prova em cada linha; depois:</span>
+<span class="k">python3</span> conferir/funcoes.py conferir checklist.md       <span class="c"># 0 = todas provadas · 1 = falta alguma</span></pre>
+    <p>Quer um teste de função automático? <code>conferir/exemplos/funcoes-contador.js</code> é o que usamos no teste real; copie e troque os passos para o seu app.</p>
+  </div></div>
+
+  <div class="step"><div class="b">4</div><div>
+    <h3>Use os pedidos prontos</h3>
+    <div class="grid g3" style="margin-top:6px">
+      <div class="card"><h3>1 · Sala limpa</h3><p>Refazer só com o que um visitante vê.</p></div>
+      <div class="card"><h3>2 · Meta de semelhança</h3><p>O agente só para quando a régua passa.</p></div>
+      <div class="card"><h3>3 · Mudança de marca</h3><p>Nome, logo e cor depois que funciona.</p></div>
+      <div class="card"><h3>4 · Provas de função</h3><p>Cada função com prova, no formato do conferidor.</p></div>
+      <div class="card"><h3>5 · Quadro branco</h3><p>O teste completo, com as 16 funções.</p></div>
+      <div class="card"><h3>Testes do kit</h3><p><code>bash tests/rodar.sh</code>: mais de 30 verificações, sem internet.</p></div>
+    </div>
+  </div></div>
+</div></section>
+
+<section id="local"><div class="wrap">
+  <span class="chip">Sem nuvem</span>
+  <h2>O caminho local</h2>
+  <p class="sub">O Craft Anything usa modelos locais só para perguntas e análise; para construir, ele precisa de um agente de código instalado. Se você quer tudo rodando na sua máquina, sem depender de modelo na nuvem, o caminho que já testamos é o REA com um harness local e um modelo aberto no Ollama.</p>
+  <div class="grid g3">
+    <div class="card"><h3>🔓 rea-sem-travas</h3><p>Harness dsh + modelo aberto no Ollama + REA, tudo local. <a href="https://inematds.github.io/rea-sem-travas/guia/" target="_blank" rel="noopener">Abrir o guia</a></p></div>
+    <div class="card"><h3>🧾 rea-com-provas</h3><p>O agente tem que provar o que diz que entendeu; conferidor em Python. <a href="https://inematds.github.io/rea-com-provas/guia/" target="_blank" rel="noopener">Abrir o guia</a></p></div>
+    <div class="card"><h3>🧭 rea-engenharia-reversa</h3><p>O guia do REA com um teste feito do zero. <a href="https://inematds.github.io/rea-engenharia-reversa/guia/" target="_blank" rel="noopener">Abrir o guia</a></p></div>
+    <div class="card"><h3>📦 caixa-do-agente</h3><p>Roda qualquer agente numa caixa Docker descartável, sem rede e sem os seus <code>.env</code>. <a href="https://inematds.github.io/caixa-do-agente/guia/" target="_blank" rel="noopener">Abrir o guia</a></p></div>
+    <div class="card"><h3>🎨 site-inspirado</h3><p>Site no estilo das suas referências, com um portão que confere a página. <a href="https://inematds.github.io/site-inspirado/guia/" target="_blank" rel="noopener">Abrir o guia</a></p></div>
+    <div class="card"><h3>📈 site-que-vende</h3><p>Mede os 5 padrões do site que traz cliente e diz o que consertar. <a href="https://inematds.github.io/site-que-vende/guia/" target="_blank" rel="noopener">Abrir o guia</a></p></div>
+  </div>
+  <div class="warn" role="note">
+    <h3>Uso responsável</h3>
+    <ul>
+      <li>Estude só o que é seu ou o que você tem permissão de examinar. O Craft Anything não contorna DRM, login nem anti-cheat.</li>
+      <li>A sua versão é escrita do zero: nada de logo, fotos ou textos do original sem permissão.</li>
+      <li>Rode numa pasta separada, sem senhas, chaves ou dados de clientes.</li>
+    </ul>
+  </div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">Craft Anything 0.6.0</div><div class="pill">REA</div><div class="pill">Node.js + Playwright</div><div class="pill">Python 3</div><div class="pill">MIT</div>
+    <p style="margin-top:18px">craft-anything-vs-rea · guia e kit abertos e gratuitos ·
+      <a href="https://github.com/inematds/craft-anything-vs-rea">inematds/craft-anything-vs-rea</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='craft-anything-vs-rea-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    try{ if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      try{ localStorage.setItem(KEY, light?'light':'dark'); }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>

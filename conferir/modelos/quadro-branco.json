@@ -1,0 +1,22 @@
+{
+  "nome": "Quadro branco (tipo Excalidraw)",
+  "descricao": "O teste do quadro branco: a cópia bonita que não desenha não serve.",
+  "funcoes": [
+    {"id": "F01", "nome": "Retângulo", "como": "Escolha o retângulo, arraste na tela: aparece um retângulo do tamanho arrastado."},
+    {"id": "F02", "nome": "Círculo / elipse", "como": "Escolha a elipse, arraste: aparece a elipse."},
+    {"id": "F03", "nome": "Losango", "como": "Escolha o losango, arraste: aparece o losango."},
+    {"id": "F04", "nome": "Linha", "como": "Escolha a linha, arraste: aparece uma linha reta entre os dois pontos."},
+    {"id": "F05", "nome": "Seta", "como": "Escolha a seta, arraste: aparece uma linha com ponta de seta no fim."},
+    {"id": "F06", "nome": "Lápis (desenho livre)", "como": "Escolha o lápis, faça uma curva: o traço segue o mouse."},
+    {"id": "F07", "nome": "Texto", "como": "Escolha texto, clique, digite 'teste': o texto aparece e continua editável com duplo clique."},
+    {"id": "F08", "nome": "Cor do traço e do fundo", "como": "Selecione uma forma, troque a cor: a forma muda de cor."},
+    {"id": "F09", "nome": "Selecionar e mover", "como": "Clique numa forma e arraste: ela muda de lugar."},
+    {"id": "F10", "nome": "Redimensionar", "como": "Puxe a alça do canto de uma forma selecionada: ela muda de tamanho."},
+    {"id": "F11", "nome": "Apagar", "como": "Selecione uma forma e aperte Delete (ou a borracha): ela some."},
+    {"id": "F12", "nome": "Desfazer / refazer", "como": "Ctrl+Z desfaz a última ação; Ctrl+Shift+Z (ou Ctrl+Y) refaz."},
+    {"id": "F13", "nome": "Zoom", "como": "Ctrl + roda do mouse ou os botões + e −: a tela aproxima e afasta; o 100% volta."},
+    {"id": "F14", "nome": "Tema claro / escuro", "como": "O botão de tema troca as cores da tela inteira e as formas continuam visíveis."},
+    {"id": "F15", "nome": "Exportar imagem", "como": "Exportar PNG (ou SVG) baixa um arquivo que abre e mostra o desenho."},
+    {"id": "F16", "nome": "Nome e marca próprios", "como": "Não aparece o nome, o logo nem o texto do original em lugar nenhum (título da aba, menu, rodapé)."}
+  ]
+}
